@@ -9,22 +9,22 @@
     </resultMap>
 
     <insert id="addType"  parameterType="com.liangliang.bookmanager.bean.Type"  keyProperty="typeId" useGeneratedKeys="true">
-        INSERT INTO type (type_name) VALUES (#{typeName})
+        INSERT INTO "type" ("type_name") VALUES (#{typeName})
     </insert>
 
     <delete id="deleteType" parameterType="int">
-        DELETE FROM type WHERE type_id=#{typeId}
+        DELETE FROM "type" WHERE "type_id"=#{typeId}
     </delete>
 
     <update id="updateType" parameterType="com.liangliang.bookmanager.bean.Type">
-        UPDATE type set type_name = #{typeName} WHERE type_id = #{typeId}
+        UPDATE "type" set "type_name" = #{typeName} WHERE "type_id" = #{typeId}
     </update>
 
     <select id="getTypeList"  resultMap="TypeMap">
-        SELECT * FROM type
+        SELECT * FROM "type"
     </select>
 
     <select id="getTypeById" parameterType="int" resultMap="TypeMap">
-        SELECT * FROM type WHERE type_id=#{typeId}
+        SELECT * FROM "type" WHERE "book_type_id"=#{typeId}
     </select>
 </mapper>

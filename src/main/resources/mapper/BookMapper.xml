@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-                "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.liangliang.bookmanager.mapper.BookMapper">
+
     <resultMap id="BookMap" type="com.liangliang.bookmanager.bean.Book">
         <id column="book_id" property="bookId"/>
         <result column="book_name" property="bookName"/>
@@ -16,77 +17,85 @@
     </resultMap>
 
     <insert id="addBook" parameterType="com.liangliang.bookmanager.bean.Book">
-        INSERT INTO book (book_name,author,image_url,location,type_id,isbn,state,book_date)
-        VALUES (#{bookName},#{author},#{imageUrl},#{location},#{typeId},#{isbn},#{state},#{bookDate})
+        INSERT INTO "book" ("book_id","book_name","author","image_url","location","type_id","isbn","state","book_date")
+        VALUES (seq_book.nextVal,#{bookName},#{author},#{imageUrl},#{location},#{typeId},#{isbn},#{state},#{bookDate})
     </insert>
-
     <update id="updateBook" parameterType="com.liangliang.bookmanager.bean.Book">
-        UPDATE book
+        UPDATE "book"
         <set>
             <if test="bookName != null">
-                book_name = #{bookName},
+                "book_name" = #{bookName},
             </if>
             <if test="author != null">
-                author = #{author},
+                "author" = #{author},
             </if>
             <if test="imageUrl != null">
-                image_url = #{imageUrl},
+                "image_url" = #{imageUrl},
             </if>
             <if test="location != null">
-                location = #{location},
+                "location" = #{location},
             </if>
             <if test="typeId != null">
-                type_id = #{typeId},
+                "type_id" = #{typeId},
             </if>
             <if test="isbn != null">
-                isbn = #{isbn},
+                "isbn" = #{isbn},
             </if>
             <if test="state != null">
-                state = #{state}
+                "state" = #{state}
             </if>
         </set>
-        WHERE book_id = #{bookId}
+        WHERE "book_id" = #{bookId}
     </update>
-
     <select id="searchBook" resultMap="BookMap">
-        SELECT b.*, t.type_name, s.state_name FROM book b, type t, state s
-        WHERE ${searchName} LIKE #{search}
-        AND b.type_id = t.type_id
-        AND b.state = s.state_id
-        ORDER BY ${sort} ${order} LIMIT #{offset},#{limit}
+        SELECT * FROM(
+            SELECT "book".*, "type"."type_name", "state"."state_name",ROWNUM rn FROM "book", "type", "state"
+            WHERE ${searchName} LIKE #{search}
+            AND "book"."type_id" = "type"."type_id"
+            AND "book"."state" = "state"."state_id"
+            ORDER BY #{sort} #{order}
+        )c
+        WHERE c.rn BETWEEN #{offset} AND #{limit}
     </select>
 
     <select id="searchBookCount" resultType="int">
-        SELECT COUNT(*) FROM book b, type t, state s
-        WHERE ${searchName} LIKE #{search}
-        AND b.type_id = t.type_id
-        AND b.state = s.state_id
+        SELECT COUNT(*) FROM (
+            SELECT * FROM(
+                SELECT "book".*, "type"."type_name", "state"."state_name",ROWNUM rn FROM "book", "type", "state"
+                WHERE ${searchName} LIKE #{search}
+                AND "book"."type_id" = "type"."type_id"
+                AND "book"."state" = "state"."state_id"
+                ORDER BY #{sort} #{order}
+            )c
+            WHERE c.rn BETWEEN #{offset} AND #{limit}
+        )
     </select>
 
     <select id="getBookList"  resultMap="BookMap">
-        SELECT * FROM book b
+        SELECT * FROM "book"
     </select>
 
     <select id="getBookAndUserList"  resultMap="BookMap">
-        SELECT b.* FROM book b
-        ORDER BY ${sort} ${order} LIMIT #{offset},#{limit}
+        SELECT * FROM (
+            SELECT "book".*,ROWNUM rn FROM "book"
+            ORDER BY #{sort}
+        )c
+        WHERE c.rn BETWEEN #{offset} AND #{limit}
     </select>
 
     <select id="bookCount" resultType="int">
-        SELECT COUNT(*) FROM book b
+        SELECT COUNT(*) FROM "book"
     </select>
 
 
     <delete id="deleteBook" parameterType="int">
-        DELETE FROM book
-        WHERE book_id=#{bookId}
+        DELETE FROM "book"
+        WHERE "book_id"=#{bookId}
     </delete>
 
     <select id="getBookInfoById" parameterType="int" resultMap="BookMap">
-        SELECT * FROM book b
-        WHERE book_id=#{bookId}
+        SELECT * FROM "book"
+        WHERE "book_id"=#{bookId}
     </select>
-
-
 
 </mapper>

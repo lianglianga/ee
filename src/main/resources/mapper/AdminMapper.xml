@@ -11,8 +11,8 @@
     </resultMap>
 
     <select id="adminLogin" resultMap="AdminMap">
-        SELECT * FROM admin a
-        WHERE a.username = #{username} and a.password = #{password}
+        SELECT * FROM "admin"
+        WHERE "admin"."username" = #{username} and "admin"."password" = #{password}
     </select>
 
 </mapper>

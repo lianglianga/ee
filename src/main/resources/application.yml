@@ -3,12 +3,12 @@ server:
 
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    username: root
-    password: 123456
-    url: jdbc:mysql://101.132.140.132/bookmanager?characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    username: scott
+    password: 12345678
+    url: jdbc:oracle:thin:@127.0.0.1:1521:bookmanager
     ip: localhost
-    port: 3306
+    port: 1521
     database: bookmanager
 
   thymeleaf:

@@ -56,7 +56,6 @@ public class BookServiceImpl implements BookService{
             e.printStackTrace();
             return 0;
         }
-
         return state;
     }
 

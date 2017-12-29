@@ -16,99 +16,96 @@
     </resultMap>
 
     <select id="getUserList"  resultMap="UserMap">
-        SELECT * FROM `user` u
+        SELECT * FROM "user"
     </select>
 
     <select id="getUserById"  resultMap="UserMap">
-        SELECT * FROM `user` u WHERE `user_id` = #{_parameter}
-    </select>
-    <select id="getByEmailAndPwd" resultMap="UserMap">
-        select u.`user_id`,u.`email`,u.`nickname` from `user` u
-        <where>
-            <if test="email != null">
-                and u.`email` = #{email}
-            </if>
-            <if test="password != null">
-                and u.`password`=#{password}
-            </if>
-        </where>
+        SELECT * FROM "user" WHERE "user_id" = #{_parameter}
     </select>
 
     <select id="searchUser" resultMap="UserMap">
-        SELECT u.*,g.`user_group_info` FROM `user` u
-        LEFT JOIN `group` g ON g.`user_group_id` =  u.`group`
-        <where>
-            <if test="groupValue != null and groupValue != ''">
-                AND u.`group` = #{groupValue}
-            </if>
-            <if test="searchName != null and search != null">
-                AND ${searchName} LIKE #{search}
-            </if>
-        </where>
-        ORDER BY ${sort} LIMIT #{offset},#{limit}
+        SELECT * FROM(
+            SELECT "user".*,"group"."user_group_info",ROWNUM rn FROM "user" ,"group"
+            <where>
+                "group"."user_group_id"=  "user"."group"
+                <if test="groupValue != null and groupValue != ''">
+                    AND "user"."group" = #{groupValue}
+                </if>
+                <if test="searchName != null and search != null">
+                    AND "user"."${searchName}" LIKE #{search}
+                </if>
+            </where>
+            ORDER BY #{sort}
+        )b
+        WHERE b.rn BETWEEN #{offset} AND #{limit}
     </select>
 
     <select id="searchUserCount" resultType="Integer">
-        SELECT COUNT(*) FROM `user` u
-        LEFT JOIN `group` g ON g.`user_group_id` =  u.`group`
-       <where>
-            <if test="groupValue != null and groupValue != ''">
-                AND u.`group` = #{groupValue}
-            </if>
-            <if test="searchName != null and search != null">
-                AND ${searchName} LIKE #{search}
-            </if>
-        </where>
+        SELECT COUNT(*) FROM(
+            SELECT * FROM(
+                SELECT "user".*,"group"."user_group_info",ROWNUM rn FROM "user" ,"group"
+                <where>
+                    "group"."user_group_id"=  "user"."group"
+                    <if test="groupValue != null and groupValue != ''">
+                        AND "user"."group" = #{groupValue}
+                    </if>
+                    <if test="searchName != null and search != null">
+                        AND "user"."${searchName}" LIKE #{search}
+                    </if>
+                </where>
+                ORDER BY #{sort}
+            )b
+            WHERE b.rn BETWEEN #{offset} AND #{limit}
+        )
     </select>
 
     <insert id="addUser" parameterType="com.liangliang.bookmanager.bean.User">
-        INSERT INTO `user` (`username`,`password`,`nickname`,`avatar_image`,`points`,`group`,`user_state`,`email`)
-        SELECT #{username},#{password},#{nickname},#{avatarImage},#{points},#{group},#{userState},#{email} FROM DUAL
-        WHERE NOT EXISTS(SELECT 1 FROM(SELECT 1 FROM `user` WHERE `username`=#{username})a)
+        INSERT INTO "user" ("user_id","username","password","nickname","avatar_image","points","group","user_state","email")
+        VALUES (seq_user.nextVal,#{username},#{password},#{nickname},#{avatarImage},#{points},#{group},#{userState},#{email})
     </insert>
 
     <update id="updateUser" parameterType="com.liangliang.bookmanager.bean.User">
-        UPDATE `user`
+        UPDATE "user"
         <set>
             <if test="username != null">
-                `username` = #{username},
+                "username" = #{username},
             </if>
             <if test="password != null">
-                `password`=#{password},
+                "password"=#{password},
             </if>
             <if test="nickname != null">
-                `nickname` = #{nickname},
+                "nickname" = #{nickname},
             </if>
             <if test="avatarImage != null">
-                `avatar_image` = #{avatarImage},
+                "avatar_image" = #{avatarImage},
             </if>
             <if test="group != null">
-                `group` = #{group},
+                "group" = #{group},
             </if>
             <if test="points != null">
-                `points`= #{points},
+                "points"= #{points},
             </if>
             <if test="userState != null">
-                `user_state` = #{userState},
+                "user_state" = #{userState},
             </if>
             <if test="email != null">
-                `email` = #{email}
+                "email" = #{email}
             </if>
         </set>
-        where user_id=#{userId}
+        where "user_id"=#{userId}
         <!--<if test="username != null">-->
-            <!--and not exists(select 1 from(select 1 from `user` where `username`=#{username})a)-->
+            <!--and not exists(select 1 from(select 1 from user where username=#{username})a)-->
         <!--</if>-->
     </update>
 
     <delete id="deleteUser">
-        DELETE FROM `user`
-        WHERE `user_id`=#{_parameter}
+        DELETE FROM "user"
+        WHERE "user_id"=#{_parameter}
     </delete>
 
     <select id="userLogin" resultMap="UserMap">
-        SELECT * FROM user u
-        WHERE u.username = #{username} and u.password = #{password}
+        SELECT * FROM "user"
+        WHERE "user"."username" = #{username} and "user"."password" = #{password}
     </select>
 
 </mapper>
