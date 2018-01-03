@@ -96,7 +96,7 @@ public class UserController {
                 imageName = avatarImageFile.getOriginalFilename();
             }
 
-            User user = new User(null,username,password,nickname,null,points,group,userState,email,imageName,avatarImageFile,null);
+            User user = new User(null,username,password,nickname,null,points,group,userState,email,imageName,avatarImageFile);
             if(userService.addUser(user)){
                 return new Message(Message.SUCCESS,"新增用户成功！",null);
             }else{
@@ -131,7 +131,7 @@ public class UserController {
             if(avatarImageFile != null && avatarImageFile.getSize() > 0){
                 imageName = avatarImageFile.getOriginalFilename();
             }
-            User user = new User(userId,username,password,nickname,null,points,group,userState,email,imageName,avatarImageFile,null);
+            User user = new User(userId,username,password,nickname,null,points,group,userState,email,imageName,avatarImageFile);
             if(userService.updateUser(user)){
                 return new Message(Message.SUCCESS,"修改用户成功！",null);
             }else{

@@ -5,13 +5,13 @@ package com.liangliang.bookmanager.bean;
  */
 public class TableMessageForUser extends TableMessage{
     private static final String GROUP = "group";  //用户组
-    private Integer groupValue;
+    private String groupValue;
 
-    public Integer getGroupValue() {
+    public String getGroupValue() {
         return groupValue;
     }
 
-    public void setGroupValue(Integer groupValue) {
+    public void setGroupValue(String groupValue) {
         this.groupValue = groupValue;
     }
 }

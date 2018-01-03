@@ -11,6 +11,7 @@ spring:
     port: 3306
     database: bookmanager
   jpa:
+#    hibernate.ddl-auto: create-drop
     show-sql: true
   thymeleaf:
     cache: false

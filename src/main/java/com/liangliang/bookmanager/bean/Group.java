@@ -3,13 +3,13 @@ package com.liangliang.bookmanager.bean;
 
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-@DynamicUpdate
+@Table(name = "group")
 public class Group {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userGroupId;
     private String userGroupInfo;
 

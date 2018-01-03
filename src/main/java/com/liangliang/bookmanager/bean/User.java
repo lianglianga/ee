@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class User {
     @Id
     @Column(name = "user_id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)//设置Id自增长
     private Integer userId;
     @Column(name = "username")
     private String username;
@@ -40,9 +40,6 @@ public class User {
     private String imageName;
     @Transient
     private MultipartFile avatarImageFile;
-    @OneToOne(cascade=CascadeType.ALL)
-    private Group userGroup;
-
 
     @Override
     public String toString() {
@@ -64,7 +61,7 @@ public class User {
     public User() {
     }
 
-    public User(Integer userId,String username, String password, String nickname, String avatarImage, Integer points, Integer group, Integer userState, String email, String imageName, MultipartFile avatarImageFile, Group userGroup) {
+    public User(Integer userId,String username, String password, String nickname, String avatarImage, Integer points, Integer group, Integer userState, String email, String imageName, MultipartFile avatarImageFile) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -76,7 +73,6 @@ public class User {
         this.email = email;
         this.imageName = imageName;
         this.avatarImageFile = avatarImageFile;
-        this.userGroup = userGroup;
     }
 
     public Integer getUserId() {
@@ -165,12 +161,5 @@ public class User {
     public void setImageName(String imageName) {
         this.imageName = imageName;
     }
-    @OneToOne
-    public Group getUserGroup() {
-        return userGroup;
-    }
 
-    public void setUserGroup(Group userGroup) {
-        this.userGroup = userGroup;
-    }
 }

@@ -7,6 +7,7 @@ import com.liangliang.bookmanager.bean.User;
 import com.liangliang.bookmanager.mapper.UserMapper;
 import com.liangliang.bookmanager.repository.UserRepository;
 import com.liangliang.bookmanager.service.UserService;
+import com.liangliang.bookmanager.utils.CommonUtil;
 import com.liangliang.bookmanager.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -59,10 +60,15 @@ public class UserServiceImpl implements UserService {
             PageRequest pageRequest = new PageRequest(tableMessage.getOffset()/tableMessage.getLimit()+1
                                                         ,tableMessage.getLimit());
             tableMessage.setSearch("%"+tableMessage.getSearch()+"%");
+            if(tableMessage.getGroupValue()==null){
+                tableMessage.setGroupValue("%%");
+            }else {
+                tableMessage.setGroupValue("%"+tableMessage.getGroupValue()+"%");
+            }
             userList = repository.searchUser(tableMessage);
             tableMessage.setRows(userList);
-//            Integer total = repository.searchUserCount(tableMessage,pageRequest);
-//            tableMessage.setTotal(total);
+            Integer total = repository.searchUserCount(tableMessage);
+            tableMessage.setTotal(total);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

@@ -26,16 +26,19 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT u FROM User u WHERE u.username = ?1  and u.password = ?2")
     User userLogin(String username,String password);
 
-    @Query(value = "SELECT u FROM User u JOIN u.userGroup g WHERE u.group=g.userGroupId\n " +
-            "AND u.nickname LIKE :#{#tableMessage.search}\n"+
-            "AND u.group LIKE :#{#tableMessage.groupValue}\n")
-            //"AND :#{#tableMessage.searchName} LIKE :#{#tableMessage.search}\n")
+    @Query(value = "SELECT u.*,g.* FROM user u LEFT JOIN `group` g ON u.`group`=g.user_group_id\n" +
+            "WHERE u.nickname LIKE :#{#tableMessage.search}\n"+
+            "AND u.group LIKE :#{#tableMessage.groupValue}\n" +
+            "ORDER BY :#{#tableMessage.sort}\n" +
+            "LIMIT :#{#tableMessage.offset},:#{#tableMessage.limit}",nativeQuery = true)
     List<User> searchUser(@Param("tableMessage") TableMessageForUser tableMessage);
 
-//    @Query("SELECT u,g FROM User u LEFT JOIN Group g ON g.userGroupId =  u.group\n" +
-//            " AND u.group = :#{#tableMessage.groupValue}\n" +
-//            " AND :#{#tableMessage.searchName} LIKE :#{#tableMessage.search}\n" +
-//            " ORDER BY :#{#tableMessage.sort} ")
-//    int searchUserCount(@Param("tableMessage") TableMessageForUser tableMessage, PageRequest pageRequest);
+    @Query(value = "SELECT COUNT(*) FROM (\n" +
+            "SELECT u.*,g.* FROM user u LEFT JOIN `group` g ON u.`group`=g.user_group_id\n" +
+            "WHERE u.nickname LIKE :#{#tableMessage.search}\n"+
+            "AND u.group LIKE :#{#tableMessage.groupValue}\n" +
+            "ORDER BY :#{#tableMessage.sort}\n" +
+            "LIMIT :#{#tableMessage.offset},:#{#tableMessage.limit}) u",nativeQuery = true)
+    int searchUserCount(@Param("tableMessage") TableMessageForUser tableMessage);
 
 }
