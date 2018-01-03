@@ -1,9 +1,9 @@
 package com.liangliang.bookmanager.bean;
 
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+
 
 @Entity
 @Table(name = "user")
@@ -40,6 +40,9 @@ public class User {
     private String imageName;
     @Transient
     private MultipartFile avatarImageFile;
+    @OneToOne(cascade=CascadeType.ALL)
+    private Group userGroup;
+
 
     @Override
     public String toString() {
@@ -61,7 +64,7 @@ public class User {
     public User() {
     }
 
-    public User(Integer userId, String username, String password, String nickname, String avatarImage, Integer points, Integer group, Integer userState, String email, String imageName, MultipartFile avatarImageFile) {
+    public User(Integer userId,String username, String password, String nickname, String avatarImage, Integer points, Integer group, Integer userState, String email, String imageName, MultipartFile avatarImageFile, Group userGroup) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -73,6 +76,7 @@ public class User {
         this.email = email;
         this.imageName = imageName;
         this.avatarImageFile = avatarImageFile;
+        this.userGroup = userGroup;
     }
 
     public Integer getUserId() {
@@ -122,7 +126,6 @@ public class User {
     public void setPoints(Integer points) {
         this.points = points;
     }
-
     public Integer getGroup() {
         return group;
     }
@@ -161,5 +164,13 @@ public class User {
 
     public void setImageName(String imageName) {
         this.imageName = imageName;
+    }
+    @OneToOne
+    public Group getUserGroup() {
+        return userGroup;
+    }
+
+    public void setUserGroup(Group userGroup) {
+        this.userGroup = userGroup;
     }
 }

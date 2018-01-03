@@ -1,5 +1,6 @@
 package com.liangliang.bookmanager.bean;
 
+
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
@@ -10,7 +11,6 @@ import javax.persistence.Id;
 public class Group {
     @Id
     private Integer userGroupId;
-
     private String userGroupInfo;
 
     public Group(Integer userGroupId, String userGroupInfo) {
