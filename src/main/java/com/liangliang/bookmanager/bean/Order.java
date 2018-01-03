@@ -2,7 +2,12 @@ package com.liangliang.bookmanager.bean;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.liangliang.bookmanager.config.CustomJsonDateDeserializer;
+import org.apache.ibatis.annotations.One;
+import org.hibernate.annotations.DynamicUpdate;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.util.Date;
 
 /**
@@ -10,7 +15,10 @@ import java.util.Date;
  * @Description:
  * @Date Created in 16:27 2017/12/13
  */
+@Entity
+@DynamicUpdate
 public class Order {
+    @Id
     private Integer orderId;
 
     private Integer bookId;
@@ -24,9 +32,9 @@ public class Order {
 
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     private Date updateDate;
-
+    @OneToOne
     private User borrower;
-
+    @OneToOne
     private Book book;
 
     private Date readyTime;

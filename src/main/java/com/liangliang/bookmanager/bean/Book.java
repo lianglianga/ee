@@ -2,11 +2,19 @@ package com.liangliang.bookmanager.bean;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.liangliang.bookmanager.config.CustomJsonDateDeserializer;
+import org.hibernate.annotations.DynamicUpdate;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.Date;
 import java.util.List;
 
+@Entity
+@DynamicUpdate
 public class Book {
+    @Id
     private Integer bookId;
 
     private String bookName;
@@ -24,11 +32,11 @@ public class Book {
     private String isbn;
 
     private Integer state;
-
+    @OneToOne
     private Type type;
-
+    @OneToOne
     private State stateInfo;
-
+    @OneToMany
     private List<Order> order;
 
     public Book(Integer bookId, String bookName, String author, String imageUrl, String location, Integer typeId, String isbn, Integer state, Date bookDate ) {

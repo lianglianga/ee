@@ -6,11 +6,12 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 123456
-    url: jdbc:mysql://101.132.140.132/bookmanager?characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://127.0.0.1/bookmanager?characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
     ip: localhost
     port: 3306
     database: bookmanager
-
+  jpa:
+    show-sql: true
   thymeleaf:
     cache: false
     check-template: false
@@ -20,12 +21,6 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.liangliang.bookmanager.mapper
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
 com:
   liangliang:
     custom:

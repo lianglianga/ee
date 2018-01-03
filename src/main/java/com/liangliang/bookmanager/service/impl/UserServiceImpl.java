@@ -5,6 +5,7 @@ import com.liangliang.bookmanager.bean.TableMessage;
 import com.liangliang.bookmanager.bean.TableMessageForUser;
 import com.liangliang.bookmanager.bean.User;
 import com.liangliang.bookmanager.mapper.UserMapper;
+import com.liangliang.bookmanager.repository.UserRepository;
 import com.liangliang.bookmanager.service.UserService;
 import com.liangliang.bookmanager.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,16 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
+    private UserRepository repository;
+    @Autowired
     private UserMapper userMapper;
-
 
     @Override
     public List<User> getUserList() {
 
         List<User> userList = new ArrayList<>();
         try {
-            userList = userMapper.getUserList();
+            userList = repository.findAll();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -39,7 +41,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
 
         try {
-            user = userMapper.getUserById(id);
+            user = repository.findOne(id);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -75,7 +77,9 @@ public class UserServiceImpl implements UserService {
                 String fileName = FileUtil.save(user.getAvatarImageFile(), FileUtil.WINDOWS_PATH);
                 user.setAvatarImage(fileName);
             }
-            state = userMapper.addUser(user) == 1;
+            User result = repository.save(user);
+            state = result==null ? false : true;
+
         }catch (Exception e){
             e.printStackTrace();
             return false;
@@ -91,7 +95,8 @@ public class UserServiceImpl implements UserService {
                 String fileName = FileUtil.save(user.getAvatarImageFile(), FileUtil.WINDOWS_PATH);
                 user.setAvatarImage(fileName);
             }
-            state = userMapper.updateUser(user) == 1;
+            User result = repository.saveAndFlush(user);
+            state = result==null ? false : true;
         }catch (Exception e){
             e.printStackTrace();
             return false;

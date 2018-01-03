@@ -1,6 +1,14 @@
 package com.liangliang.bookmanager.bean;
 
+import org.hibernate.annotations.DynamicUpdate;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+@DynamicUpdate
 public class State {
+    @Id
     private Integer stateId;
 
     private String stateName;

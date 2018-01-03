@@ -1,6 +1,14 @@
 package com.liangliang.bookmanager.bean;
 
+import org.hibernate.annotations.DynamicUpdate;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+@DynamicUpdate
 public class Admin {
+    @Id
     private Integer adminId;
 
     private String username;

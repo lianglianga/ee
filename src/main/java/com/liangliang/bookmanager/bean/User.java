@@ -1,34 +1,44 @@
 package com.liangliang.bookmanager.bean;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "user")
 public class User {
+    @Id
+    @Column(name = "user_id")
+    @GeneratedValue
     private Integer userId;
-
+    @Column(name = "username")
     private String username;
-
+    @Column(name = "password")
     private String password;
-
+    @Column(name = "nickname")
     private String nickname;
 
     /**
      * 传给数据库的头像图片名
      */
+    @Column(name = "avatar_image")
     private String avatarImage;
-
+    @Column(name = "points")
     private Integer points;
-
+    @Column(name = "`group`")
     private Integer group;
-
+    @Column(name = "user_state")
     private Integer userState;
-
+    @Column(name = "email")
     private String email;
 
     /**
      * 传输给前台的头像图片名
      */
+    @Transient
     private String imageName;
-
+    @Transient
     private MultipartFile avatarImageFile;
 
     @Override
