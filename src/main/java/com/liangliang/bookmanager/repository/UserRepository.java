@@ -1,7 +1,9 @@
 package com.liangliang.bookmanager.repository;
 
+import com.liangliang.bookmanager.bean.TableMessage;
 import com.liangliang.bookmanager.bean.TableMessageForUser;
 import com.liangliang.bookmanager.bean.User;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
