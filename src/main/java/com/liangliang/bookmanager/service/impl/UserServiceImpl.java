@@ -7,8 +7,10 @@ import com.liangliang.bookmanager.bean.User;
 import com.liangliang.bookmanager.mapper.UserMapper;
 import com.liangliang.bookmanager.repository.UserRepository;
 import com.liangliang.bookmanager.service.UserService;
+import com.liangliang.bookmanager.utils.CommonUtil;
 import com.liangliang.bookmanager.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,12 +56,18 @@ public class UserServiceImpl implements UserService {
         List<User> userList = new ArrayList<>();
         //1.判断你昵称和用户组搜索条件是否为空,若为空则返回所有数据
         try {
+            // page size
+            PageRequest pageRequest = new PageRequest(tableMessage.getOffset()/tableMessage.getLimit()+1
+                                                        ,tableMessage.getLimit());
             tableMessage.setSearch("%"+tableMessage.getSearch()+"%");
-            userList = userMapper.searchUser(tableMessage);
-            System.out.println(userList);
-            userList = userMapper.searchUser(tableMessage);
+            if(tableMessage.getGroupValue()==null){
+                tableMessage.setGroupValue("%%");
+            }else {
+                tableMessage.setGroupValue("%"+tableMessage.getGroupValue()+"%");
+            }
+            userList = repository.searchUser(tableMessage);
             tableMessage.setRows(userList);
-            Integer total = userMapper.searchUserCount(tableMessage);
+            Integer total = repository.searchUserCount(tableMessage);
             tableMessage.setTotal(total);
         } catch (Exception e) {
             e.printStackTrace();
@@ -108,7 +116,7 @@ public class UserServiceImpl implements UserService {
     public boolean deleteUser(Integer id) {
         boolean state = false;
         try {
-            state = userMapper.deleteUser(id) == 1 ? true : false;
+            state = repository.deleteByUserId(id) == 1? true : false;
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -135,7 +143,8 @@ public class UserServiceImpl implements UserService {
         int userId = 0;
         User user1 = new User();
         try {
-            user1 = userMapper.userLogin(user);
+            //user1 = userMapper.userLogin(user);
+            user1 = repository.userLogin(user.getUsername(),user.getPassword());
             if(user1 == null) {
                 return -1;
             }else{

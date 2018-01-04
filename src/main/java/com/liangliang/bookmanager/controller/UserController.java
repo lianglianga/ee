@@ -1,8 +1,10 @@
 package com.liangliang.bookmanager.controller;
 
+import com.liangliang.bookmanager.bean.Group;
 import com.liangliang.bookmanager.bean.Message;
 import com.liangliang.bookmanager.bean.TableMessageForUser;
 import com.liangliang.bookmanager.bean.User;
+import com.liangliang.bookmanager.service.GroupService;
 import com.liangliang.bookmanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private GroupService groupService;
 
     /**
      * 获取用户列表
@@ -91,6 +95,7 @@ public class UserController {
             if(avatarImageFile != null && avatarImageFile.getSize() > 0){
                 imageName = avatarImageFile.getOriginalFilename();
             }
+
             User user = new User(null,username,password,nickname,null,points,group,userState,email,imageName,avatarImageFile);
             if(userService.addUser(user)){
                 return new Message(Message.SUCCESS,"新增用户成功！",null);

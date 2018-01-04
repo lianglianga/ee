@@ -1,17 +1,15 @@
 package com.liangliang.bookmanager.bean;
 
-import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "`group`")
 public class Group {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userGroupId;
-
     private String userGroupInfo;
 
     public Group(Integer userGroupId, String userGroupInfo) {

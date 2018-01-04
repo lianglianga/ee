@@ -4,12 +4,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 
+
 @Entity
 @Table(name = "user")
 public class User {
     @Id
     @Column(name = "user_id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)//设置Id自增长
     private Integer userId;
     @Column(name = "username")
     private String username;
@@ -60,7 +61,7 @@ public class User {
     public User() {
     }
 
-    public User(Integer userId, String username, String password, String nickname, String avatarImage, Integer points, Integer group, Integer userState, String email, String imageName, MultipartFile avatarImageFile) {
+    public User(Integer userId,String username, String password, String nickname, String avatarImage, Integer points, Integer group, Integer userState, String email, String imageName, MultipartFile avatarImageFile) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -121,7 +122,6 @@ public class User {
     public void setPoints(Integer points) {
         this.points = points;
     }
-
     public Integer getGroup() {
         return group;
     }
@@ -161,4 +161,5 @@ public class User {
     public void setImageName(String imageName) {
         this.imageName = imageName;
     }
+
 }
