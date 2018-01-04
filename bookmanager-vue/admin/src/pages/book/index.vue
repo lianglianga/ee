@@ -3,16 +3,16 @@
 		<!--工具条-->
 		<el-col :span="24" class="toolbar">
 			<el-form :inline="true" :model="filters">
-				<el-select v-model="filters.searchName" placeholder="请选择">
+				<!-- <el-select v-model="filters.searchName" placeholder="请选择">
 					<el-option
 					v-for="item in options"
 					:key="item.value"
 					:label="item.label"
 					:value="item.value">
 					</el-option>
-				</el-select>
+				</el-select> -->
 				<el-form-item>
-					<el-input v-model="filters.search" placeholder="请输入查询内容"></el-input>
+					<el-input v-model="filters.search" placeholder="请输入图书名称"></el-input>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getBookList">查询</el-button>
@@ -135,14 +135,14 @@
     			addLoading: false,       //是否显示loading
 				disabledChange: false,
 				filters: {
-					searchName: 'author',
-					search:' '
+					searchName: '',
+					search:''
 				},
 				books: [],
 				booktypes:[],
 				total: 0,
 				offset: 0,
-				sort: 'book_id',
+				sort: '+book_id',
 				limit: 20,
 				listLoading: false,
 				editFormVisible: false,//编辑界面显是否显示

@@ -32,7 +32,6 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private BookRepository bookRepository;
 
-
     @Override
     public List<Order> getOrderList() throws Exception {
         List<Order> orderList = new ArrayList<>();

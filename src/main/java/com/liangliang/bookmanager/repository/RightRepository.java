@@ -12,7 +12,7 @@ import java.util.List;
 public interface RightRepository extends JpaRepository<Right, Integer> {
     @Query(value = "SELECT r.*, o.* FROM `right` r, `order` o" +
             "WHERE r.order_id = o.order_id"+
-            "ORDER BY :#{#tableMessage.sort}\n" +
+            "ORDER BY :#{#tableMessage.sort}" +
             "LIMIT :#{#tableMessage.offset},:#{#tableMessage.limit}",nativeQuery = true)
     public List<Right> getInitRights(@Param("tableMessage") TableMessage tableMessage) throws Exception;
 

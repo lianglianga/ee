@@ -112,6 +112,7 @@ public class BookServiceImpl implements BookService{
     public TableMessage searchBook(TableMessage tableMessage){
 
         List<Book> bookList = new ArrayList<>();
+        List<Book> searchBookList = new ArrayList<>();
         int orderStatusId = 0;
         try {
             bookList = bookRepository.getBookAndUserList(tableMessage);
@@ -139,14 +140,15 @@ public class BookServiceImpl implements BookService{
                         }else if(book.getState()==2){
                             orderStatusId = 4;
                         }
-                        List<Order> order = orderService.getOrderByMore(book.getBookId(), orderStatusId);
-                        book.setOrder(order);
+                        //List<Order> order = orderService.getOrderByMore(book.getBookId(), orderStatusId);
+                        //book.setOrder(order);
                     }
                     tableMessage.setRows(bookList);
-                    tableMessage.setTotal(bookRepository.bookCount(tableMessage));
+                    tableMessage.setTotal(bookRepository.bookCount());
                 }else {
                     tableMessage.setSearch("%"+tableMessage.getSearch()+"%");
-                    List<Book> searchBookList = bookRepository.searchBook(tableMessage);
+                    tableMessage.setSearchName(tableMessage.getSearchName());
+                    searchBookList = bookRepository.searchBook(tableMessage);
                     tableMessage.setRows(searchBookList);
                     for (Book book : searchBookList) {
                         int typeId = book.getTypeId();
@@ -169,8 +171,8 @@ public class BookServiceImpl implements BookService{
                         }else if(book.getState()==2){
                             orderStatusId = 4;
                         }
-                        List<Order> order = orderService.getOrderByMore(book.getBookId(), orderStatusId );
-                        book.setOrder(order);
+//                        List<Order> order = orderService.getOrderByMore(book.getBookId(), orderStatusId );
+//                        book.setOrder(order);
                     }
 
                     tableMessage.setTotal(bookRepository.searchBookCount(tableMessage));
@@ -178,7 +180,7 @@ public class BookServiceImpl implements BookService{
 
             }else {
                 tableMessage.setRows(bookList);
-                tableMessage.setTotal(bookRepository.bookCount(tableMessage));
+                tableMessage.setTotal(bookRepository.bookCount());
             }
 
         } catch (Exception e) {

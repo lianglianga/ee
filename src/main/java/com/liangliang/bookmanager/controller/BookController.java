@@ -103,7 +103,8 @@ public class BookController {
     @RequestMapping(value = "/getInitBookList", method = RequestMethod.POST)
     @ResponseBody
     public Map searchBook(@RequestBody TableMessage tableMessage) throws Exception {
-        return bookService.searchBook(tableMessage).result();
+        System.out.println("！！！！" + bookService.searchBook(tableMessage).result());
+      return bookService.searchBook(tableMessage).result();
     }
 
 }
