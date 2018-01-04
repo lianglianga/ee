@@ -2,16 +2,21 @@ package com.liangliang.bookmanager.service.impl;
 
 import com.liangliang.bookmanager.bean.*;
 import com.liangliang.bookmanager.mapper.*;
+import com.liangliang.bookmanager.repository.BookRepository;
+import com.liangliang.bookmanager.repository.StateRepository;
+import com.liangliang.bookmanager.repository.TypeRepository;
+import com.liangliang.bookmanager.repository.UserRepository;
 import com.liangliang.bookmanager.service.BookService;
 import com.liangliang.bookmanager.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Component
@@ -28,6 +33,18 @@ public class BookServiceImpl implements BookService{
 
     @Autowired
     private StateMapper stateMapper;
+
+    @Autowired
+    private BookRepository bookRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private TypeRepository typeRepository;
+
+    @Autowired
+    private StateRepository stateRepository;
 
     @Autowired
     private OrderService orderService;
@@ -49,43 +66,45 @@ public class BookServiceImpl implements BookService{
     @Override
     public Integer addBook(Book book){
 
-        int state = 0;
+//        int state = 0;
         try {
-            state = bookMapper.addBook(book);
+//            state = bookMapper.addBook(book);
+            bookRepository.save(book);
+            return 1;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
-
-        return state;
     }
 
     @Override
     public Integer updateBook(Book book){
 
-        int state = 0;
+//        int state = 0;
         try {
-            state = bookMapper.updateBook(book);
+            bookRepository.saveAndFlush(book);
+            return 1;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
 
-        return state;
+//        return state;
     }
 
     @Override
     public Integer deleteBook(int bookId) throws Exception {
 
-        int state = 0;
+//        int state = 0;
         try {
-            state = bookMapper.deleteBook(bookId);
+            bookRepository.delete(bookId);
+            return 1;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
 
-        return state;
+
     }
 
     @Override
@@ -94,7 +113,7 @@ public class BookServiceImpl implements BookService{
         Book book = new Book();
 
         try {
-            book = bookMapper.getBookInfoById(bookId);
+            book = bookRepository.findOne(bookId);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -106,18 +125,21 @@ public class BookServiceImpl implements BookService{
     @Transactional
     public TableMessage searchBook(TableMessage tableMessage){
 
-        List<Book> bookList = new ArrayList<>();
+        Sort sort = new Sort(tableMessage.getSort());
+        Pageable pageable = new PageRequest(tableMessage.getOffset(),tableMessage.getLimit(),sort);
+
+        Page<Book> bookList;
         int orderStatusId = 0;
         try {
-            bookList = bookMapper.getBookAndUserList(tableMessage);
+            bookList = bookRepository.getBookAndUserList(pageable);
 
             if(tableMessage.getSearch()!=null){
                 if(tableMessage.getSearch().equals("")){
-                    bookList = bookMapper.getBookAndUserList(tableMessage);
+                    bookList = bookRepository.getBookAndUserList(pageable);
                     for (Book book : bookList) {
-                        Type type = typeMapper.getTypeById(book.getTypeId());
+                        Type type = typeRepository.findOne(book.getTypeId());
                         book.setType(type);
-                        State state = stateMapper.getStateInfoById(book.getState());
+                        State state = stateRepository.findOne(book.getState());
                         book.setStateInfo(state);
                         if(book.getState()==5){
                             orderStatusId = -1;
@@ -138,16 +160,16 @@ public class BookServiceImpl implements BookService{
                         book.setOrder(order);
                     }
                     tableMessage.setRows(bookList);
-                    tableMessage.setTotal(bookMapper.bookCount(tableMessage));
+                    tableMessage.setTotal(bookRepository.bookCount());
                 }else {
                     tableMessage.setSearch("%"+tableMessage.getSearch()+"%");
-                    List<Book> searchBookList = bookMapper.searchBook(tableMessage);
+                    Page<Book> searchBookList = bookRepository.searchBook(tableMessage.getSearchName(),tableMessage.getSearch(),pageable);
                     tableMessage.setRows(searchBookList);
                     for (Book book : searchBookList) {
                         int typeId = book.getTypeId();
-                        Type type = typeMapper.getTypeById(typeId);
+                        Type type = typeRepository.findOne(typeId);
                         book.setType(type);
-                        State state = stateMapper.getStateInfoById(book.getState());
+                        State state = stateRepository.findOne(book.getState());
                         book.setStateInfo(state);
                         if(book.getState()==5){
                             orderStatusId = -1;
@@ -168,12 +190,12 @@ public class BookServiceImpl implements BookService{
                         book.setOrder(order);
                     }
 
-                    tableMessage.setTotal(bookMapper.searchBookCount(tableMessage));
+                    tableMessage.setTotal(bookRepository.searchBookCount(tableMessage.getSearchName(),tableMessage.getSearch()));
                 }
 
             }else {
                 tableMessage.setRows(bookList);
-                tableMessage.setTotal(bookMapper.bookCount(tableMessage));
+                tableMessage.setTotal(bookRepository.bookCount());
             }
 
         } catch (Exception e) {
