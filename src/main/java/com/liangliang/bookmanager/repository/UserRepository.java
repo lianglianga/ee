@@ -37,6 +37,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "AND u.group LIKE :#{#tableMessage.groupValue}\n" +
             "ORDER BY :#{#tableMessage.sort}\n" +
             "LIMIT :#{#tableMessage.offset},:#{#tableMessage.limit}) u",nativeQuery = true)
-    int searchUserCount(@Param("tableMessage") TableMessageForUser tableMessage);
+     int searchUserCount(@Param("tableMessage") TableMessageForUser tableMessage);
 
 }
