@@ -26,6 +26,8 @@ export const addBook = params => { return axios.post(`/api/book/addBook`, params
 
 export const updateBook = params => { return axios.post(`/api/book/updateBook`, params); };
 
+export const updateBookState = params => { return axios.post(`/api/book/updateBookState`, params); };
+
 export const getBookInfoById = params => { return axios.post(`/api/book/getBookInfoById`, params); };
 
 //type
@@ -37,6 +39,8 @@ export const getOrderList = params => { return axios.post(`/api/order/getOrderLi
 export const getOrderListPage = params => { return axios.post(`/api/order/getSearchOrder`, params); };
 
 export const updateOrder = params => { return axios.post(`/api/order/updateOrder`, params); };
+
+export const updateOrderState = params => { return axios.post(`/api/order/updateOrderState`, params); };
 
 export const deleteOrder = params => { return axios.post(`/api/order/deleteOrder`, params); };
 

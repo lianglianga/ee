@@ -13,12 +13,15 @@ public interface OrderService {
     public boolean addOrder(Order order) throws Exception;
 
     public boolean updateOrder(Order order) throws Exception;
+    public boolean updateOrderState(Order order) throws Exception;
 
     public boolean deleteOrder(int orderId) throws Exception;
 
     public Order getOrderById(int orderId) throws Exception;
 
     public TableMessage searchOrder(TableMessageForOrder tableMessage) throws Exception;
+
+    public TableMessage searchOrderByUserId(TableMessageForOrder tableMessage) throws Exception;
 
     public List<Order> getOrderByMore(int bookId, int status) throws Exception;
 }

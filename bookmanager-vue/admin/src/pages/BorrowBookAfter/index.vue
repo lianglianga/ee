@@ -34,7 +34,7 @@
 	import util from '../../common/util'
 	import NProgress from 'nprogress'
 	import cropper from '../book/cropper'
-	import { getInitBookList, deleteBook, addBook, updateBook, getBookInfoById, getTypeList, updateOrder } from '../../api/api';
+	import { getInitBookList, deleteBook, addBook, updateBook,updateBookState, getBookInfoById, getTypeList, updateOrderState,updateOrder } from '../../api/api';
 	import $ from '../../../static/jquery.min.js'
 
 	export default {
@@ -140,7 +140,7 @@
 						bookId: value,
 						state: 4
 					};
-					updateBook(para).then((res) => {
+					updateBookState(para).then((res) => {
 						_this.listLoading = false;
 						NProgress.done();
 						_this.$notify({
@@ -153,7 +153,7 @@
 							status: 2
 						};
 						_this.getBookList();
-						updateOrder(param)
+						updateOrderState(param)
 					});
 
 				}).catch(() => {
@@ -173,7 +173,7 @@
 						bookId: value,
 						state: 1
 					};
-					updateBook(para).then((res) => {
+					updateBookState(para).then((res) => {
 						_this.listLoading = false;
 						NProgress.done();
 						_this.$notify({
@@ -186,7 +186,7 @@
 							status: 1
 						};
 						_this.getBookList();
-						updateOrder(param)
+						updateOrderState(param)
 					});
 
 				}).catch(() => {

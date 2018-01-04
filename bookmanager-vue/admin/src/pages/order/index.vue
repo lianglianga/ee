@@ -76,7 +76,7 @@
 	import util from '../../common/util'
 	import NProgress from 'nprogress'
 	import moment from 'moment'
-	import { getOrderList, getOrderListPage,updateOrder,deleteOrder,addOrder,updateBook  } from '../../api/api';
+	import { getOrderList, getOrderListPage,updateOrder,deleteOrder,addOrder,updateBook,updateOrderState,updateBookState  } from '../../api/api';
 
 	export default {
 		data() {
@@ -200,7 +200,7 @@
 									orderId: _this.editForm.id,
 									status: _this.editForm.status
 								};
-								updateOrder(para).then((res) => {
+								updateOrderState(para).then((res) => {
 									_this.listLoading = false;
 									NProgress.done();
 									if(this.editForm.status==-1){
@@ -208,49 +208,49 @@
 										state: 5,
 										bookId: _this.editForm.bookId,
 									}
-										updateBook(param)
+										updateBookState(param)
 									}else if(this.editForm.status==0){
 										let param = {
 										state: 3,
 										bookId: _this.editForm.bookId,
 									}
-										updateBook(param)
+										updateBookState(param)
 									}else if(this.editForm.status==6){
 										let param = {
 										state: 6,
 										bookId: _this.editForm.bookId,
 									}
-										updateBook(param)
+										updateBookState(param)
 									}else if(this.editForm.status==1){
 										let param = {
 										state: 1,
 										bookId: _this.editForm.bookId,
 									}
-										updateBook(param)
+										updateBookState(param)
 									}else if(this.editForm.status==2){
 										let param = {
 										state: 4,
 										bookId: _this.editForm.bookId,
 									}
-										updateBook(param)
+										updateBookState(param)
 									}else if(this.editForm.status==3){
 										let param = {
 										state: 0,
 										bookId: _this.editForm.bookId,
 									}
-										updateBook(param)
+										updateBookState(param)
 									}else if(this.editForm.status==5){
 										let param = {
 										state: 0,
 										bookId: _this.editForm.bookId,
 									}
-										updateBook(param)
+										updateBookState(param)
 									}else if(this.editForm.status==4){
 										let param = {
 										state: 2,
 										bookId: _this.editForm.bookId,
 									}
-										updateBook(param)
+										updateBookState(param)
 									}
 									
 									if(res.data.status===1){

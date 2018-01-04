@@ -33,3 +33,6 @@ export const deleteOrder = params => { return axios.post(`/api/order/deleteOrder
 export const addOrder = params => { return axios.post(`/api/order/addOrder`, params)};
 
 export const updateOrder = params => { return axios.post(`/api/order/updateOrder`, params)};
+
+export const getOrderByUserId = params => { return axios.post(`/api/order/getOrderByUserId`, params)};
+

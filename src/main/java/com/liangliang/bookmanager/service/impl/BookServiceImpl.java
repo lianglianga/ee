@@ -155,8 +155,8 @@ public class BookServiceImpl implements BookService{
                         }else if(book.getState()==2){
                             orderStatusId = 4;
                         }
-                        //List<Order> order = orderService.getOrderByMore(book.getBookId(), orderStatusId);
-                        //book.setOrder(order);
+//                        List<Order> order = orderService.getOrderByMore(book.getBookId(), orderStatusId);
+//                        book.setOrder(order);
                     }
                     tableMessage.setRows(bookList);
                     tableMessage.setTotal(bookRepository.bookCount());
@@ -185,8 +185,8 @@ public class BookServiceImpl implements BookService{
                         }else if(book.getState()==2){
                             orderStatusId = 4;
                         }
-                        List<Order> order = orderService.getOrderByMore(book.getBookId(), orderStatusId );
-                        book.setOrder(order);
+/*                        List<Order> order = orderService.getOrderByMore(book.getBookId(), orderStatusId );
+                        book.setOrder(order);*/
                     }
 
                     tableMessage.setTotal(bookRepository.searchBookCount(tableMessage));

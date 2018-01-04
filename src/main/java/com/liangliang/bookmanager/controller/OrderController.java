@@ -69,6 +69,22 @@ public class OrderController {
      * @param order
      * @return
      */
+    /**
+     * 根据
+     * @param tableMessage
+     * @return
+     */
+    @RequestMapping(value = "/getOrderByUserId", method = RequestMethod.POST)
+    @ResponseBody
+    public Map getOrderByUserId(@RequestBody TableMessageForOrder tableMessage) throws Exception{
+        System.out.println(tableMessage);
+        return orderService.searchOrderByUserId(tableMessage).result();
+    }
+    /**
+     * 新增借阅记录
+     * @param order
+     * @return
+     */
     @RequestMapping(value = "/addOrder", method = RequestMethod.POST)
     @ResponseBody
     public Message addOrder(HttpServletRequest request, @RequestBody Order order){
@@ -117,6 +133,25 @@ public class OrderController {
     public Message updateOrder(@RequestBody Order order){
         try {
             if(orderService.updateOrder(order)){
+                return new Message(Message.SUCCESS,"修改借阅记录成功！",null);
+            }else{
+                return new Message(Message.ERROR,"修改借阅记录失败！",null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Message(Message.ERROR,"修改借阅记录失败！",null);
+        }
+    }
+    /**
+     * 修改借阅记录
+     * @param order
+     * @return
+     */
+    @RequestMapping(value = "/updateOrderState", method = RequestMethod.POST)
+    @ResponseBody
+    public Message updateOrderState(@RequestBody Order order){
+        try {
+            if(orderService.updateOrderState(order)){
                 return new Message(Message.SUCCESS,"修改借阅记录成功！",null);
             }else{
                 return new Message(Message.ERROR,"修改借阅记录失败！",null);

@@ -50,7 +50,7 @@
 
 <script>
   import axios from 'axios'
-  import {getSearchOrder,getBookInfoById,deleteOrder,updateBook,updateOrder} from './api/api.js'
+  import {getSearchOrder,getBookInfoById,deleteOrder,updateBook,updateOrder,getOrderByUserId} from './api/api.js'
   export default {
     name: 'cart',
     data () {
@@ -159,7 +159,7 @@
 					sort: this.sort,
 					limit: this.limit
         }
-        getSearchOrder(param).then((res)=>{
+        getOrderByUserId(param).then((res)=>{
           this.orderList = res.data.rows
           console.log('this.orderList ')
           console.log(this.orderList )

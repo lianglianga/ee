@@ -69,6 +69,19 @@ public class OrderServiceImpl implements OrderService{
         }
         return state;
     }
+    @Override
+    public boolean updateOrderState(Order order) {
+        boolean state = false;
+        try {
+            Order existOrder = orderRepository.findOne(order.getOrderId());
+            existOrder.setStatus(order.getStatus());
+            Order result = orderRepository.saveAndFlush(existOrder);
+            state = result==null ? false : true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return state;
+    }
 
     @Override
     public boolean deleteOrder(int orderId) {
@@ -105,8 +118,11 @@ public class OrderServiceImpl implements OrderService{
         List<Order> orderList = new ArrayList<>();
         //1.判断你昵称和用户组搜索条件是否为空,若为空则返回所有数据
         try {
+            if(tableMessage.getUserIdValue()==null){
+
+            }
             //tableMessage.setSearch("%"+tableMessage.getSearch()+"%");
-            tableMessage.setUsernameValue("%"+tableMessage.getUsernameValue()+"%");
+//            tableMessage.setUsernameValue("%"+tableMessage.getUsernameValue()+"%");
             //tableMessage.setBookNameValue("%"+tableMessage.getBookNameValue()+"%");
             orderList = orderRepository.searchOrder(tableMessage);
             for (Order order: orderList){
@@ -124,11 +140,34 @@ public class OrderServiceImpl implements OrderService{
         }
         return tableMessage;
     }
+    @Override
+    @Transactional
+    public TableMessage searchOrderByUserId(TableMessageForOrder tableMessage){
+        List<Order> orderList = new ArrayList<>();
+        //1.判断你昵称和用户组搜索条件是否为空,若为空则返回所有数据
+        try {
 
+            //tableMessage.setSearch("%"+tableMessage.getSearch()+"%");
+//            tableMessage.setUsernameValue("%"+tableMessage.getUsernameValue()+"%");
+            //tableMessage.setBookNameValue("%"+tableMessage.getBookNameValue()+"%");
+            orderList = orderRepository.searchOrder(tableMessage);
+            for (Order order: orderList){
+                Integer userId = order.getBorrowerId();
+                Integer bookId = order.getBookId();
+                order.setBorrower(userRepository.findOne(userId));
+                order.setBook(bookRepository.findOne(bookId));
+            }
+            tableMessage.setRows(orderList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return tableMessage;
+    }
     @Override
     public List<Order> getOrderByMore(int bookId, int status) throws Exception {
 
-        List<Order> orderList = orderMapper.getOrderByMore(bookId, status);
+        List<Order> orderList = orderRepository.getOrderByMore(bookId, status);
 
         for (Order order:orderList) {
             User user = userRepository.findOne(order.getBorrowerId());
