@@ -138,7 +138,7 @@
               'bookId': this.orderList[index].bookId,
               'status': 0
             }
-            updateBook(param).then(res=>{
+            updateBookState(param).then(res=>{
               console.log('修改书籍结果')
               console.log(res.data)
             })
@@ -153,7 +153,7 @@
         this.bookList=[]
         this.orderList=[]
         let param = {
-          usernameValue: this.user.username,
+          userIdValue: this.user.userId,
           bookNameValue: '',
 					offset: this.offset,
 					sort: this.sort,
@@ -180,7 +180,7 @@
             //       'bookId': this.orderList[index].bookId,
             //       'status': 0
             //     }
-            //     updateBook(param).then(res=>{
+            //     updateBookState(param).then(res=>{
             //       console.log('修改书籍结果')
             //       console.log(res.data)
             //     })
@@ -206,7 +206,7 @@
                   'bookId': this.orderList[index].bookId,
                   'status': -1
                 }
-                updateBook(param).then(res=>{
+                updateBookState(param).then(res=>{
                   console.log('修改书籍结果')
                   console.log(res.data)
                 })
@@ -247,7 +247,7 @@
                   'bookId': bookId,
                   'state' : 0
                 }
-                updateBook(param).then(res=>{
+                updateBookState(param).then(res=>{
                   console.log('修改书籍结果')
                   console.log(res.data)
                   if(res.data.status === 1){

@@ -45,6 +45,7 @@ public interface UserService {
      */
     public boolean updateUser(User user);
 
+    public boolean updateUserPoints(User user);
     /**
      * 删除一个用户
      * @param id

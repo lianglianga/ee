@@ -107,7 +107,20 @@ public class UserServiceImpl implements UserService {
         }
         return state;
     }
-
+    @Override
+    public boolean updateUserPoints(User user){
+        boolean state = false;
+        try {
+            User existUser = repository.findOne(user.getUserId());
+            existUser.setPoints(user.getPoints());
+            User result = repository.saveAndFlush(existUser);
+            state = result==null ? false : true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return state;
+    }
     @Override
     public boolean deleteUser(Integer id) {
         boolean state = false;

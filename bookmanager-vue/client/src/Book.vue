@@ -32,7 +32,7 @@
 </template>
 
 <script>
-	import {getBookInfoById,addOrder,getUserById,updateUser,updateBook} from './api/api.js'
+	import {getBookInfoById,addOrder,getUserById,updateUser,updateBook,updateUserPoints,updateBookState} from './api/api.js'
 	export default {
 		name: 'book',
 		data () {
@@ -108,7 +108,7 @@
 								let param = new FormData()
 								param.append('userId', this.user.userId)
 								param.append('points', this.user.points)
-								updateUser(param).then((res) => {
+								updateUserPoints(param).then((res) => {
 									console.log('修改结果：')
 									console.log(res.data)
 								})
@@ -117,7 +117,7 @@
 									'bookId': book.bookId,
 									'state': 5
 								}
-								updateBook(param).then(res=>{
+								updateBookState(param).then(res=>{
 									console.log('修改书籍结果:')
 									console.log(res.data)
 								})

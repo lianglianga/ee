@@ -7,6 +7,8 @@ public class TableMessageForOrder extends TableMessage{
 
     private static final String USERNAME = "username";  //用户名
     private String usernameValue;
+    private static final String USERID = "user_id";  //用户名
+    private String userIdValue;
 
     private static final String BOOKNAME = "book_name";  //书籍名
     private String bookNameValue;
@@ -25,5 +27,13 @@ public class TableMessageForOrder extends TableMessage{
 
     public void setBookNameValue(String bookNameValue) {
         this.bookNameValue = bookNameValue;
+    }
+
+    public String getUserIdValue() {
+        return userIdValue;
+    }
+
+    public void setUserIdValue(String userIdValue) {
+        this.userIdValue = userIdValue;
     }
 }

@@ -26,7 +26,7 @@
 
 <script>
 	import pagination from './Pagination'
-	import {getBookInfoById,addOrder,getUserById,updateUser} from '../api/api.js'
+	import {getBookInfoById,addOrder,getUserById,updateUser,updateUserPoints} from '../api/api.js'
 
 	export default {
 		name: 'books',
@@ -91,7 +91,7 @@
 							let param = new FormData()
 							param.append('userId', this.user.userId)
 							param.append('points', this.user.points)
-							updateUser(param).then((res) => {
+							updateUserPoints(param).then((res) => {
 								console.log('修改结果：')
 								console.log(res.data)
 							})

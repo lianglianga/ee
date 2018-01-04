@@ -55,20 +55,36 @@ public class BookServiceImpl implements BookService{
 //        int state = 0;
         try {
 //            state = bookMapper.addBook(book);
-            bookRepository.save(book);
+            bookRepository.saveAndFlush(book);
             return 1;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
+    @Override
+    public Integer updateBookState(Book book){
 
+//        int state = 0;
+        try {
+            Book existBook = bookRepository.findOne(book.getBookId());
+            existBook.setState(book.getState());
+            bookRepository.saveAndFlush(existBook);
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+//        return state;
+    }
     @Override
     public Integer updateBook(Book book){
 
 //        int state = 0;
         try {
-            bookRepository.saveAndFlush(book);
+            Book existBook = bookRepository.findOne(book.getBookId());
+            bookRepository.save(book);
             return 1;
         } catch (Exception e) {
             e.printStackTrace();
@@ -139,11 +155,11 @@ public class BookServiceImpl implements BookService{
                         }else if(book.getState()==2){
                             orderStatusId = 4;
                         }
-                        List<Order> order = orderService.getOrderByMore(book.getBookId(), orderStatusId);
-                        book.setOrder(order);
+                        //List<Order> order = orderService.getOrderByMore(book.getBookId(), orderStatusId);
+                        //book.setOrder(order);
                     }
                     tableMessage.setRows(bookList);
-                    tableMessage.setTotal(bookRepository.bookCount(tableMessage));
+                    tableMessage.setTotal(bookRepository.bookCount());
                 }else {
                     tableMessage.setSearch("%"+tableMessage.getSearch()+"%");
                     List<Book> searchBookList = bookRepository.searchBook(tableMessage);
@@ -178,7 +194,7 @@ public class BookServiceImpl implements BookService{
 
             }else {
                 tableMessage.setRows(bookList);
-                tableMessage.setTotal(bookRepository.bookCount(tableMessage));
+                tableMessage.setTotal(bookRepository.bookCount());
             }
 
         } catch (Exception e) {

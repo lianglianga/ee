@@ -7,6 +7,8 @@ export const getUserById = params => { return axios.post(`/api/user/getUserById`
 
 export const updateUser = params => { return axios.post(`/api/user/updateUser`, params)};
 
+export const updateUserPoints = params => { return axios.post(`/api/user/updateUserPoints`, params)};
+
 export const addUser = params => { return axios.post(`/api/user/addUser`, params)};
 
 //book
@@ -17,6 +19,8 @@ export const getBookList = params => { return axios.post(`/api/book/getBookList`
 export const getBookInfoById = params => { return axios.post(`/api/book/getBookInfoById`, params)};
 
 export const updateBook = params => { return axios.post(`/api/book/updateBook`, params)};
+
+export const updateBookState = params => { return axios.post(`/api/book/updateBookState`, params)};
 
 //type
 export const getTypeList = params => { return axios.post(`/api/type/getTypeList`, params)};

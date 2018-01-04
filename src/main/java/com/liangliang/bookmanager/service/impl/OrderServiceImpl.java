@@ -50,7 +50,6 @@ public class OrderServiceImpl implements OrderService{
     public boolean addOrder(Order order) {
         boolean state = false;
         try {
-//            state = orderMapper.addOrder(order) == 1 ? true : false;
             Order res = orderRepository.save(order);
             state = res ==null ? false : true;
         }catch (Exception e){
@@ -63,9 +62,8 @@ public class OrderServiceImpl implements OrderService{
     public boolean updateOrder(Order order) {
         boolean state = false;
         try {
-//            state = orderMapper.updateOrder(order) == 1 ? true : false;
-            Order res = orderRepository.saveAndFlush(order);
-            state = res ==null ? false : true;
+            Order result = orderRepository.saveAndFlush(order);
+            state = result==null ? false : true;
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -74,9 +72,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public boolean deleteOrder(int orderId) {
-//        boolean state = false;
+        boolean state = false;
         try {
-//            state = orderMapper.deleteOrder(orderId) == 1 ? true : false;
+            state = orderRepository.deleteByOrderId(orderId) == 1 ? true : false;
             orderRepository.delete(orderId);
             return true;
         }catch (Exception e){
@@ -107,10 +105,10 @@ public class OrderServiceImpl implements OrderService{
         List<Order> orderList = new ArrayList<>();
         //1.判断你昵称和用户组搜索条件是否为空,若为空则返回所有数据
         try {
-            tableMessage.setSearch("%"+tableMessage.getSearch()+"%");
+            //tableMessage.setSearch("%"+tableMessage.getSearch()+"%");
             tableMessage.setUsernameValue("%"+tableMessage.getUsernameValue()+"%");
-            tableMessage.setBookNameValue("%"+tableMessage.getBookNameValue()+"%");
-            orderList = orderMapper.searchOrder(tableMessage);
+            //tableMessage.setBookNameValue("%"+tableMessage.getBookNameValue()+"%");
+            orderList = orderRepository.searchOrder(tableMessage);
             for (Order order: orderList){
                 Integer userId = order.getBorrowerId();
                 Integer bookId = order.getBookId();
@@ -118,7 +116,7 @@ public class OrderServiceImpl implements OrderService{
                 order.setBook(bookRepository.findOne(bookId));
             }
             tableMessage.setRows(orderList);
-            Integer total = orderMapper.searchOrderCount(tableMessage);
+            Integer total = orderRepository.searchOrderCount(tableMessage);
             tableMessage.setTotal(total);
         } catch (Exception e) {
             e.printStackTrace();

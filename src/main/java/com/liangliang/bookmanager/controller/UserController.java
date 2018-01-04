@@ -107,7 +107,31 @@ public class UserController {
             return new Message(Message.ERROR,"新增用户失败！",null);
         }
     }
+    /**
+     * 修改用户
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/updateUserPoints", method = RequestMethod.POST)
+    @ResponseBody
+    public Message updateUserPoints(MultipartHttpServletRequest request){
+        try {
+            Integer points = request.getParameter("points")==null ? null : Integer.parseInt(request.getParameter("points"));
+            Integer userId = request.getParameter("userId")==null ? null : Integer.parseInt(request.getParameter("userId"));
 
+            User user = new User();
+            user.setPoints(points);
+            user.setUserId(userId);
+            if(userService.updateUserPoints(user)){
+                return new Message(Message.SUCCESS,"修改用户成功！",null);
+            }else{
+                return new Message(Message.ERROR,"修改用户失败！",null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Message(Message.ERROR,"修改用户失败！",null);
+        }
+    }
     /**
      * 修改用户
      * @param request

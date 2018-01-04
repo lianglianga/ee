@@ -69,7 +69,20 @@ public class BookController {
         }
         return new Message(Message.SUCCESS,"修改图书信息成功！",state);
     }
+    @RequestMapping(value = "/updateBookState", method = RequestMethod.POST)
+    @ResponseBody
+    public Message updateBookState(@RequestBody Book book){
 
+        int state = 0;
+
+        try {
+            state = bookService.updateBookState(book);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Message(Message.ERROR,"修改图书信息失败！",state);
+        }
+        return new Message(Message.SUCCESS,"修改图书信息成功！",state);
+    }
     @RequestMapping(value = "/deleteBook", method = RequestMethod.POST)
     @ResponseBody
     public Message deleteBook(@RequestParam("bookId") int bookId){

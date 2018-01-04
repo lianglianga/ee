@@ -143,7 +143,7 @@
                   'bookId': bookId,
                   'state' : 4
                 }
-                updateBook(param).then(res=>{
+                updateBookState(param).then(res=>{
                   console.log('修改书籍结果')
                   console.log(res.data)
                   if(res.data.status === 1){

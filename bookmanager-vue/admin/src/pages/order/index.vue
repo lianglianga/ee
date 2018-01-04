@@ -1,7 +1,7 @@
 <template>
 	<section>
 		<!--工具条-->
-		<el-col :span="24" class="toolbar">
+		<!-- <el-col :span="24" class="toolbar">
 			<el-form :inline="true" :model="filters">
 				<el-form-item>
 					<el-input v-model="filters.search" placeholder="借阅记录号"></el-input>
@@ -16,7 +16,7 @@
 					<el-button type="primary" v-on:click="getOrderList">查询</el-button>
 				</el-form-item>
 			</el-form>
-		</el-col>
+		</el-col> -->
 
 		<!--列表-->
 		<template>

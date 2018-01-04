@@ -15,6 +15,8 @@ public interface BookService {
 
     public Integer updateBook(Book book) throws Exception;
 
+    public Integer updateBookState(Book book) throws Exception;
+
     public Integer deleteBook(int bookId) throws Exception;
 
     public Book getBookInfoById(int bookId) throws Exception;
