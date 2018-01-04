@@ -9,33 +9,16 @@ import com.liangliang.bookmanager.repository.UserRepository;
 import com.liangliang.bookmanager.service.BookService;
 import com.liangliang.bookmanager.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class BookServiceImpl implements BookService{
 
-    @Autowired
-    private BookMapper bookMapper;
-
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private TypeMapper typeMapper;
-
-    @Autowired
-    private StateMapper stateMapper;
 
     @Autowired
     private BookRepository bookRepository;
@@ -57,7 +40,7 @@ public class BookServiceImpl implements BookService{
 
         List<Book> bookList = new ArrayList<>();
         try {
-            bookList = bookMapper.getBookList();
+            bookList = bookRepository.findAll();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -131,11 +114,11 @@ public class BookServiceImpl implements BookService{
         List<Book> bookList = new ArrayList<>();
         int orderStatusId = 0;
         try {
-            bookList = bookRepository.getBookAndUserList(pageable);
+            bookList = bookRepository.getBookAndUserList(tableMessage);
 
             if(tableMessage.getSearch()!=null){
                 if(tableMessage.getSearch().equals("")){
-                    bookList = bookRepository.getBookAndUserList(pageable);
+                    bookList = bookRepository.getBookAndUserList(tableMessage);
                     for (Book book : bookList) {
                         Type type = typeRepository.findOne(book.getTypeId());
                         book.setType(type);
@@ -160,10 +143,10 @@ public class BookServiceImpl implements BookService{
                         book.setOrder(order);
                     }
                     tableMessage.setRows(bookList);
-                    tableMessage.setTotal(bookRepository.bookCount());
+                    tableMessage.setTotal(bookRepository.bookCount(tableMessage));
                 }else {
                     tableMessage.setSearch("%"+tableMessage.getSearch()+"%");
-                    Page<Book> searchBookList = bookRepository.searchBook(tableMessage.getSearchName(),tableMessage.getSearch(),pageable);
+                    List<Book> searchBookList = bookRepository.searchBook(tableMessage);
                     tableMessage.setRows(searchBookList);
                     for (Book book : searchBookList) {
                         int typeId = book.getTypeId();
@@ -190,12 +173,12 @@ public class BookServiceImpl implements BookService{
                         book.setOrder(order);
                     }
 
-                    tableMessage.setTotal(bookRepository.searchBookCount(tableMessage.getSearchName(),tableMessage.getSearch()));
+                    tableMessage.setTotal(bookRepository.searchBookCount(tableMessage));
                 }
 
             }else {
                 tableMessage.setRows(bookList);
-                tableMessage.setTotal(bookRepository.bookCount());
+                tableMessage.setTotal(bookRepository.bookCount(tableMessage));
             }
 
         } catch (Exception e) {

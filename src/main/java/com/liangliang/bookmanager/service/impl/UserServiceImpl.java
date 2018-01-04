@@ -56,9 +56,6 @@ public class UserServiceImpl implements UserService {
         List<User> userList = new ArrayList<>();
         //1.判断你昵称和用户组搜索条件是否为空,若为空则返回所有数据
         try {
-            // page size
-            PageRequest pageRequest = new PageRequest(tableMessage.getOffset()/tableMessage.getLimit()+1
-                                                        ,tableMessage.getLimit());
             tableMessage.setSearch("%"+tableMessage.getSearch()+"%");
             if(tableMessage.getGroupValue()==null){
                 tableMessage.setGroupValue("%%");
