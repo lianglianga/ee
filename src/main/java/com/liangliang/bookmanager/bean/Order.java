@@ -5,9 +5,7 @@ import com.liangliang.bookmanager.config.CustomJsonDateDeserializer;
 import org.apache.ibatis.annotations.One;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -16,28 +14,38 @@ import java.util.Date;
  * @Date Created in 16:27 2017/12/13
  */
 @Entity
-@DynamicUpdate
+@Table(name = "`order`")
 public class Order {
     @Id
+    @Column(name = "order_id")
+    @GeneratedValue
     private Integer orderId;
 
+    @Column(name = "book_id")
     private Integer bookId;
 
+    @Column(name = "borrower_id")
     private Integer borrowerId;
 
+    @Column(name = "status")
     private Integer status;
 
+    @Column(name = "ready_time")
+    private Date readyTime;
+
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
+    @Column(name = "create_date")
     private Date createDate;
 
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
+    @Column(name = "update_date")
     private Date updateDate;
-    @OneToOne
-    private User borrower;
-    @OneToOne
-    private Book book;
 
-    private Date readyTime;
+    @Transient
+    private User borrower;
+
+    @Transient
+    private Book book;
 
     public Order() {
     }

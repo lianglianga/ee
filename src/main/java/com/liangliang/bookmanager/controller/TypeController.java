@@ -3,6 +3,7 @@ package com.liangliang.bookmanager.controller;
 
 import com.liangliang.bookmanager.bean.Message;
 import com.liangliang.bookmanager.bean.Type;
+import com.liangliang.bookmanager.repository.TypeRepository;
 import com.liangliang.bookmanager.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -4,39 +4,50 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.liangliang.bookmanager.config.CustomJsonDateDeserializer;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@DynamicUpdate
+@Table(name = "book")
 public class Book {
+
     @Id
+    @Column(name = "book_id")
+    @GeneratedValue
     private Integer bookId;
 
+    @Column(name = "book_name")
     private String bookName;
 
+    @Column(name = "author")
     private String author;
 
+    @Column(name = "image_url")
     private String imageUrl;
 
+    @Column(name = "location")
     private String location;
 
+    @Column(name = "type_id")
     private Integer typeId;
 
+    @Column(name = "book_date")
     private Date bookDate;
 
+    @Column(name = "isbn")
     private String isbn;
 
+    @Column(name = "state")
     private Integer state;
-    @OneToOne
+
+    @Transient
     private Type type;
-    @OneToOne
+
+    @Transient
     private State stateInfo;
-    @OneToMany
+
+    @Transient
     private List<Order> order;
 
     public Book(Integer bookId, String bookName, String author, String imageUrl, String location, Integer typeId, String isbn, Integer state, Date bookDate ) {

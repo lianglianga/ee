@@ -2,15 +2,18 @@ package com.liangliang.bookmanager.bean;
 
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-@DynamicUpdate
+@Table(name = "type")
 public class Type {
+
     @Id
+    @Column(name = "type_id")
+    @GeneratedValue
     private Integer typeId;
 
+    @Column(name = "type_name")
     private String typeName;
 
     public Type(Integer typeId, String typeName) {

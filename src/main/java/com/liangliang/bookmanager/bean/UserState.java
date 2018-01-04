@@ -1,16 +1,18 @@
 package com.liangliang.bookmanager.bean;
 
-import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-@DynamicUpdate
+@Table(name = "user_state")
 public class UserState {
+
     @Id
+    @Column(name = "user_state_id")
+    @GeneratedValue
     private Integer userStateId;
 
+    @Column(name = "user_state_info")
     private String userStateInfo;
 
     public UserState(Integer userStateId, String userStateInfo) {

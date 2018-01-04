@@ -1,6 +1,5 @@
 package com.liangliang.bookmanager.bean;
 
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;

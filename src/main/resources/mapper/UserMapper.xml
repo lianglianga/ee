@@ -62,8 +62,8 @@
     </select>
 
     <insert id="addUser" parameterType="com.liangliang.bookmanager.bean.User">
-        INSERT INTO `user` (`username`,`password`,`nickname`,`avatar_image`,`points`,`group`,`user_state`,`email`)
-        SELECT #{username},#{password},#{nickname},#{avatarImage},#{points},#{group},#{userState},#{email} FROM DUAL
+        INSERT INTO `user` (`username`,`password`,`nickname`,`avatar_image`,`points`,`group`,`email`)
+        SELECT #{username},#{password},#{nickname},#{avatarImage},#{points},#{group},#{email} FROM DUAL
         WHERE NOT EXISTS(SELECT 1 FROM(SELECT 1 FROM `user` WHERE `username`=#{username})a)
     </insert>
 
@@ -109,6 +109,7 @@
     <select id="userLogin" resultMap="UserMap">
         SELECT * FROM user u
         WHERE u.username = #{username} and u.password = #{password}
+        and u.user_state = 1
     </select>
 
 </mapper>

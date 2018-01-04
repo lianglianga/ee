@@ -4,9 +4,10 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@DynamicUpdate
+@Table(name = "`group`")
 public class Group {
     @Id
     private Integer userGroupId;

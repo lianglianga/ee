@@ -7,6 +7,9 @@ import com.liangliang.bookmanager.bean.User;
 import com.liangliang.bookmanager.mapper.OrderMapper;
 import com.liangliang.bookmanager.mapper.RightMapper;
 import com.liangliang.bookmanager.mapper.UserMapper;
+import com.liangliang.bookmanager.repository.OrderRepository;
+import com.liangliang.bookmanager.repository.RightRepository;
+import com.liangliang.bookmanager.repository.UserRepository;
 import com.liangliang.bookmanager.service.RightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,23 +24,27 @@ public class RightServiceImpl implements RightService {
     private RightMapper rightMapper;
 
     @Autowired
-    private OrderMapper orderMapper;
+    private RightRepository rightRepository;
 
     @Autowired
-    private UserMapper userMapper;
+    private OrderRepository orderRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public Integer addRight(Right right){
 
-        int state = 0;
+//        int state = 0;
         try {
-            state = rightMapper.addRight(right);
+            rightRepository.save(right);
+            return 1;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
 
-        return state;
+
     }
 
     @Override
@@ -50,8 +57,8 @@ public class RightServiceImpl implements RightService {
                 if(tableMessage.getSearch().equals("")){
                     rightList = rightMapper.getInitRights(tableMessage);
                     for (Right right : rightList) {
-                        Order order = orderMapper.getOrderById(right.getOrderId());
-                        User user = userMapper.getUserById(order.getBorrowerId());
+                        Order order = orderRepository.findOne(right.getOrderId());
+                        User user = userRepository.findOne(order.getBorrowerId());
                         order.setBorrower(user);
                         right.setOrder(order);
                     }
@@ -62,8 +69,8 @@ public class RightServiceImpl implements RightService {
                     List<Right> searchBookList = rightMapper.getInitRights(tableMessage);
                     tableMessage.setRows(searchBookList);
                     for (Right right : searchBookList) {
-                        Order order = orderMapper.getOrderById(right.getOrderId());
-                        User user = userMapper.getUserById(order.getBorrowerId());
+                        Order order = orderRepository.findOne(right.getOrderId());
+                        User user = userRepository.findOne(order.getBorrowerId());
                         order.setBorrower(user);
                         right.setOrder(order);
                     }
@@ -86,29 +93,31 @@ public class RightServiceImpl implements RightService {
     @Override
     public Integer deleteRight(int rightId){
 
-        int state = 0;
+//        int state = 0;
         try {
-            state = rightMapper.deleteRight(rightId);
+            rightRepository.delete(rightId);
+            return 1;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
 
-        return state;
+
     }
 
     @Override
     public Integer updateRight(Right right){
 
-        int state = 0;
+//        int state = 0;
         try {
-            state = rightMapper.updateRight(right);
+            rightRepository.saveAndFlush(right);
+            return 1;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
 
-        return state;
+
     }
 
     @Override
@@ -117,7 +126,7 @@ public class RightServiceImpl implements RightService {
         Right right = new Right();
 
         try {
-            right = rightMapper.getRightInfoById(rightId);
+            right = rightRepository.findOne(rightId);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

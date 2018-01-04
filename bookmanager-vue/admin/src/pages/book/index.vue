@@ -135,14 +135,14 @@
     			addLoading: false,       //是否显示loading
 				disabledChange: false,
 				filters: {
-					searchName: '',
-					search:''
+					searchName: 'author',
+					search:' '
 				},
 				books: [],
 				booktypes:[],
 				total: 0,
 				offset: 0,
-				sort: '+book_id',
+				sort: 'book_id',
 				limit: 20,
 				listLoading: false,
 				editFormVisible: false,//编辑界面显是否显示

@@ -14,4 +14,5 @@ public interface TypeService {
     public Integer deleteType(int typeId) throws Exception;
 
     public Type getTypeById(int typeId) throws Exception;
+
 }

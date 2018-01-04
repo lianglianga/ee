@@ -2,13 +2,11 @@ package com.liangliang.bookmanager.bean;
 
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@DynamicUpdate
+@Table(name = "`right`")
 public class Right {
     @Id
     private Integer rightId;
@@ -24,7 +22,8 @@ public class Right {
     private Integer orderId;
 
     private String rightContent;
-    @OneToOne
+
+    @Transient
     private Order order;
 
     public Right(Integer rightId, String rightTitle, Integer rightTypeId, Date rightDate, Integer rightStateId, Integer orderId, String rightContent) {
