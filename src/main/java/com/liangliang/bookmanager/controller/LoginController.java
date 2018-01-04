@@ -23,19 +23,19 @@ public class LoginController {
     @Autowired
     private AdminService adminService;
 
-    @RequestMapping(value = "/validate",method = RequestMethod.POST)
-    @ResponseBody
-    public Message validate(@RequestBody User user){
-        try{
-            if(userService.validate(user)){
-                return new Message(Message.SUCCESS,"登录成功！",null);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            return new Message(Message.ERROR,"登录失败！",null);
-        }
-        return new Message(Message.ERROR,"登录失败！",null);
-    }
+//    @RequestMapping(value = "/validate",method = RequestMethod.POST)
+//    @ResponseBody
+//    public Message validate(@RequestBody User user){
+//        try{
+//            if(userService.validate(user)){
+//                return new Message(Message.SUCCESS,"登录成功！",null);
+//            }
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return new Message(Message.ERROR,"登录失败！",null);
+//        }
+//        return new Message(Message.ERROR,"登录失败！",null);
+//    }
 
     //user
     @RequestMapping(value = "/userLogin",method = RequestMethod.POST)
