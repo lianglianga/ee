@@ -60,7 +60,7 @@ public class RightServiceImpl implements RightService {
                         right.setOrder(order);
                     }
                     tableMessage.setRows(rightList);
-                    tableMessage.setTotal(rightRepository.getInitRightsCount(tableMessage));
+                    tableMessage.setTotal(rightRepository.getInitRightsCount());
                 }else {
                     tableMessage.setSearch("%"+tableMessage.getSearch()+"%");
                     List<Right> searchBookList = rightRepository.getInitRights(tableMessage);
@@ -71,12 +71,12 @@ public class RightServiceImpl implements RightService {
                         order.setBorrower(user);
                         right.setOrder(order);
                     }
-                    tableMessage.setTotal(rightRepository.getInitRightsCount(tableMessage));
+                    tableMessage.setTotal(rightRepository.getInitRightsCount());
                 }
 
             }else {
                 tableMessage.setRows(rightList);
-                tableMessage.setTotal(rightRepository.getInitRightsCount(tableMessage));
+                tableMessage.setTotal(rightRepository.getInitRightsCount());
             }
 
         } catch (Exception e) {
