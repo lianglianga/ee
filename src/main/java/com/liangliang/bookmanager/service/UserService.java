@@ -53,10 +53,6 @@ public interface UserService {
      */
     public boolean deleteUser(Integer id);
 
-    /**
-     * 用户登录验证
-     */
-    public boolean validate(User user);
 
     public Integer userLogin(User user) throws Exception;
 

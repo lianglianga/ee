@@ -22,8 +22,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository repository;
-    @Autowired
-    private UserMapper userMapper;
+
 
     @Override
     public List<User> getUserList() {
@@ -118,20 +117,6 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         return state;
-    }
-
-    @Override
-    public boolean validate(User user) {
-        try {
-            User result = userMapper.getByEmailAndPwd(user);
-            if(result != null){
-                return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return false;
     }
 
     @Override

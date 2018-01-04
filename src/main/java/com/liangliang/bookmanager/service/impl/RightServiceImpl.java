@@ -21,9 +21,6 @@ import java.util.List;
 public class RightServiceImpl implements RightService {
 
     @Autowired
-    private RightMapper rightMapper;
-
-    @Autowired
     private RightRepository rightRepository;
 
     @Autowired
@@ -52,10 +49,10 @@ public class RightServiceImpl implements RightService {
 
         List<Right> rightList = new ArrayList<>();
         try {
-            rightList = rightMapper.getInitRights(tableMessage);
+            rightList = rightRepository.getInitRights(tableMessage);
             if(tableMessage.getSearch()!=null){
                 if(tableMessage.getSearch().equals("")){
-                    rightList = rightMapper.getInitRights(tableMessage);
+                    rightList = rightRepository.getInitRights(tableMessage);
                     for (Right right : rightList) {
                         Order order = orderRepository.findOne(right.getOrderId());
                         User user = userRepository.findOne(order.getBorrowerId());
@@ -63,10 +60,10 @@ public class RightServiceImpl implements RightService {
                         right.setOrder(order);
                     }
                     tableMessage.setRows(rightList);
-                    tableMessage.setTotal(rightMapper.getInitRightsCount(tableMessage));
+                    tableMessage.setTotal(rightRepository.getInitRightsCount(tableMessage));
                 }else {
                     tableMessage.setSearch("%"+tableMessage.getSearch()+"%");
-                    List<Right> searchBookList = rightMapper.getInitRights(tableMessage);
+                    List<Right> searchBookList = rightRepository.getInitRights(tableMessage);
                     tableMessage.setRows(searchBookList);
                     for (Right right : searchBookList) {
                         Order order = orderRepository.findOne(right.getOrderId());
@@ -74,12 +71,12 @@ public class RightServiceImpl implements RightService {
                         order.setBorrower(user);
                         right.setOrder(order);
                     }
-                    tableMessage.setTotal(rightMapper.getInitRightsCount(tableMessage));
+                    tableMessage.setTotal(rightRepository.getInitRightsCount(tableMessage));
                 }
 
             }else {
                 tableMessage.setRows(rightList);
-                tableMessage.setTotal(rightMapper.getInitRightsCount(tableMessage));
+                tableMessage.setTotal(rightRepository.getInitRightsCount(tableMessage));
             }
 
         } catch (Exception e) {
