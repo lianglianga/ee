@@ -75,62 +75,63 @@ const routes = [
     children: [
       { path: '/order', component: Order, name: '借阅记录管理' }
     ]
-  },{
-    path: '/',
-    component: Home,
-    name: '预约审核',
-    leaf: true,//只有一个节点    
-    iconCls: 'el-icon-edit',//图标样式class
-    children: [
-      { path: '/appointment', component: AppointmentBook, name: '预约审核' }
-    ]
-  },{
-    path: '/',
-    component: Home,
-    name: '预约中审核',
-    leaf: true,//只有一个节点    
-    iconCls: 'el-icon-edit',//图标样式class
-    children: [
-      { path: '/appointmentAfter', component: AppointmentBookAfter, name: '预约中审核' }
-    ]
-  },{
-    path: '/',
-    component: Home,
-    name: '借书审核',
-    leaf: true,//只有一个节点
-    iconCls: 'el-icon-edit',//图标样式class
-    children: [
-      { path: '/borrow', component: BorrowBook, name: '借书审核' }
-    ]
-  },{
-    path: '/',
-    component: Home,
-    name: '还书',
-    leaf: true,//只有一个节点
-    iconCls: 'el-icon-edit',//图标样式class
-    children: [
-      { path: '/borrowBookAfter', component: BorrowBookAfter, name: '还书' }
-    ]
-  },
-  {
-    path: '/',
-    component: Home,
-    name: '还书审核',
-    leaf: true,//只有一个节点    
-    iconCls: 'el-icon-view',//图标样式class
-    children: [
-      { path: '/return', component: ReturnBook, name: '还书审核' }
-    ]
-  },{
-    path: '/',
-    component: Home,
-    name: '申述审核',
-    leaf: true,//只有一个节点
-    iconCls: 'el-icon-setting',//图标样式class
-    children: [
-      { path: '/rights', component: Rights, name: '申述审核' }
-    ]
-  },
+   },
+   //{
+  //   path: '/',
+  //   component: Home,
+  //   name: '预约审核',
+  //   leaf: true,//只有一个节点    
+  //   iconCls: 'el-icon-edit',//图标样式class
+  //   children: [
+  //     { path: '/appointment', component: AppointmentBook, name: '预约审核' }
+  //   ]
+  // },{
+  //   path: '/',
+  //   component: Home,
+  //   name: '预约中审核',
+  //   leaf: true,//只有一个节点    
+  //   iconCls: 'el-icon-edit',//图标样式class
+  //   children: [
+  //     { path: '/appointmentAfter', component: AppointmentBookAfter, name: '预约中审核' }
+  //   ]
+  // },{
+  //   path: '/',
+  //   component: Home,
+  //   name: '借书审核',
+  //   leaf: true,//只有一个节点
+  //   iconCls: 'el-icon-edit',//图标样式class
+  //   children: [
+  //     { path: '/borrow', component: BorrowBook, name: '借书审核' }
+  //   ]
+  // },{
+  //   path: '/',
+  //   component: Home,
+  //   name: '还书',
+  //   leaf: true,//只有一个节点
+  //   iconCls: 'el-icon-edit',//图标样式class
+  //   children: [
+  //     { path: '/borrowBookAfter', component: BorrowBookAfter, name: '还书' }
+  //   ]
+  // },
+  // {
+  //   path: '/',
+  //   component: Home,
+  //   name: '还书审核',
+  //   leaf: true,//只有一个节点    
+  //   iconCls: 'el-icon-view',//图标样式class
+  //   children: [
+  //     { path: '/return', component: ReturnBook, name: '还书审核' }
+  //   ]
+  // },{
+  //   path: '/',
+  //   component: Home,
+  //   name: '申述审核',
+  //   leaf: true,//只有一个节点
+  //   iconCls: 'el-icon-setting',//图标样式class
+  //   children: [
+  //     { path: '/rights', component: Rights, name: '申述审核' }
+  //   ]
+  // },
   //{ path: '/main', component: Main },
   // {
   //   path: '/',

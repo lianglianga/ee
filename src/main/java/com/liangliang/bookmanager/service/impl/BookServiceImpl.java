@@ -52,9 +52,7 @@ public class BookServiceImpl implements BookService{
     @Override
     public Integer addBook(Book book){
 
-//        int state = 0;
         try {
-//            state = bookMapper.addBook(book);
             bookRepository.saveAndFlush(book);
             return 1;
         } catch (Exception e) {
@@ -64,8 +62,6 @@ public class BookServiceImpl implements BookService{
     }
     @Override
     public Integer updateBookState(Book book){
-
-//        int state = 0;
         try {
             Book existBook = bookRepository.findOne(book.getBookId());
             existBook.setState(book.getState());
@@ -75,13 +71,9 @@ public class BookServiceImpl implements BookService{
             e.printStackTrace();
             return 0;
         }
-
-//        return state;
     }
     @Override
     public Integer updateBook(Book book){
-
-//        int state = 0;
         try {
             Book existBook = bookRepository.findOne(book.getBookId());
             bookRepository.save(book);
@@ -90,14 +82,11 @@ public class BookServiceImpl implements BookService{
             e.printStackTrace();
             return 0;
         }
-
-//        return state;
     }
 
     @Override
     public Integer deleteBook(int bookId) throws Exception {
 
-//        int state = 0;
         try {
             bookRepository.delete(bookId);
             return 1;

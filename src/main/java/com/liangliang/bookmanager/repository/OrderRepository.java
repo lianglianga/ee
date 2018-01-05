@@ -11,16 +11,6 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-//    public List<Order> searchOrder(TableMessage tableMessage) throws Exception;
-//
-//    public Integer searchOrderCount(TableMessage tableMessage) throws Exception;
-//
-//    public List<Order> getOrderAndUserList(TableMessage tableMessage) throws Exception;
-//
-//    public Integer orderCount(TableMessage tableMessage) throws Exception;
-//
-//    public List<Order> getOrderByMore(@Param("bookId") int bookId, @Param("status") int status);
-
     @Query(value = "SELECT o.*,u.* FROM `order` o,`user` u,`book` b\n" +
             " WHERE o.`borrower_id` = u.`user_id`" +
             "AND o.`book_id` = b.`book_id`" +
