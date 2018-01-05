@@ -84,7 +84,24 @@ public class BookServiceImpl implements BookService{
 //        int state = 0;
         try {
             Book existBook = bookRepository.findOne(book.getBookId());
-            bookRepository.save(book);
+            if (book.getState().toString()!=null){
+                existBook.setState(book.getState());
+            }else if(book.getBookId().toString()!=null){
+                existBook.setBookId(book.getBookId());
+            }else if(book.getTypeId().toString()!=null){
+                existBook.setTypeId(book.getTypeId());
+            }else if(book.getAuthor()!=null){
+                existBook.setAuthor(book.getAuthor());
+            }else if(book.getBookDate()!=null){
+                existBook.setBookDate(book.getBookDate());
+            }else if(book.getImageUrl()!=null){
+                existBook.setImageUrl(book.getImageUrl());
+            }else if(book.getLocation()!=null){
+                existBook.setLocation(book.getLocation());
+            }else if(book.getIsbn()!=null){
+                existBook.setIsbn(book.getIsbn());
+            }
+            bookRepository.saveAndFlush(existBook);
             return 1;
         } catch (Exception e) {
             e.printStackTrace();
@@ -155,8 +172,8 @@ public class BookServiceImpl implements BookService{
                         }else if(book.getState()==2){
                             orderStatusId = 4;
                         }
-                        //List<Order> order = orderService.getOrderByMore(book.getBookId(), orderStatusId);
-                        //book.setOrder(order);
+                        List<Order> order = orderService.getOrderByMore(book.getBookId(), orderStatusId);
+                        book.setOrder(order);
                     }
                     tableMessage.setRows(bookList);
                     tableMessage.setTotal(bookRepository.bookCount());

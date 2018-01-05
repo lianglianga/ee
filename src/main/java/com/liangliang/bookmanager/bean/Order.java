@@ -1,12 +1,12 @@
 package com.liangliang.bookmanager.bean;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.liangliang.bookmanager.config.CustomJsonDateDeserializer;
-import org.apache.ibatis.annotations.One;
-import org.hibernate.annotations.DynamicUpdate;
+        import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+        import com.liangliang.bookmanager.config.CustomJsonDateDeserializer;
+        import org.apache.ibatis.annotations.One;
+        import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.*;
-import java.util.Date;
+        import javax.persistence.*;
+        import java.util.Date;
 
 /**
  * @Author: YannYao

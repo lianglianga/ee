@@ -62,7 +62,22 @@ public class OrderServiceImpl implements OrderService{
     public boolean updateOrder(Order order) {
         boolean state = false;
         try {
-            Order result = orderRepository.saveAndFlush(order);
+            Order upOrder = orderRepository.findOne(order.getOrderId());
+            if (order.getBorrowerId()!=null){
+                upOrder.setBorrowerId(order.getBorrowerId());
+            }else if(order.getBookId()!=null){
+                upOrder.setBookId(order.getBookId());
+            }else if(order.getStatus()!=null){
+                upOrder.setStatus(order.getStatus());
+            }else if(order.getUpdateDate()!=null){
+                upOrder.setUpdateDate(order.getUpdateDate());
+            }else if(order.getCreateDate()!=null){
+                upOrder.setCreateDate(order.getCreateDate());
+            }else if(order.getReadyTime()!=null){
+                upOrder.setReadyDate(order.getReadyTime());
+            }
+            Order result = orderRepository.saveAndFlush(upOrder);
+
             state = result==null ? false : true;
         }catch (Exception e){
             e.printStackTrace();
@@ -116,7 +131,7 @@ public class OrderServiceImpl implements OrderService{
                 order.setBook(bookRepository.findOne(bookId));
             }
             tableMessage.setRows(orderList);
-            Integer total = orderRepository.searchOrderCount(tableMessage);
+            Integer total = orderRepository.searchOrderCount();
             tableMessage.setTotal(total);
         } catch (Exception e) {
             e.printStackTrace();
@@ -128,7 +143,7 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public List<Order> getOrderByMore(int bookId, int status) throws Exception {
 
-        List<Order> orderList = orderMapper.getOrderByMore(bookId, status);
+        List<Order> orderList = orderRepository.getOrderByMore(bookId, status);
 
         for (Order order:orderList) {
             User user = userRepository.findOne(order.getBorrowerId());

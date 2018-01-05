@@ -11,27 +11,27 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-//    public List<Order> searchOrder(TableMessage tableMessage) throws Exception;
-//
-//    public Integer searchOrderCount(TableMessage tableMessage) throws Exception;
-//
-//    public List<Order> getOrderAndUserList(TableMessage tableMessage) throws Exception;
-//
-//    public Integer orderCount(TableMessage tableMessage) throws Exception;
-//
-//    public List<Order> getOrderByMore(@Param("bookId") int bookId, @Param("status") int status);
-
-    @Query(value = "SELECT * FROM `order` o\n" +
-            " WHERE `borrow_id` = :#{#tableMessage.userIdValue}" +
+    @Query(value = "SELECT o.*, u.`username`, b.`book_name` FROM `user` u , `order` o, `book` b\n" +
+            " WHERE o.`borrower_id` = u.`user_id`" +
+            " AND b.`book_id` = o.`book_id` " +
+            " ORDER BY  :#{#tableMessage.sort} " +
             " LIMIT :#{#tableMessage.offset},:#{#tableMessage.limit}",nativeQuery = true)
     List<Order> searchOrder(@Param("tableMessage") TableMessageForOrder tableMessage);
 
-    @Query(value = "SELECT COUNT(*) FROM (SELECT * FROM `order` o\n" +
-            " LIMIT :#{#tableMessage.offset},:#{#tableMessage.limit}) u",nativeQuery = true)
-    int searchOrderCount(@Param("tableMessage") TableMessageForOrder tableMessage);
+    @Query(value = "SELECT COUNT(*) FROM `user` u , `order` o, `book` b\n" +
+            " WHERE o.`borrower_id` = u.`user_id`" +
+            " AND b.`book_id` = o.`book_id` ",nativeQuery = true)
+    int searchOrderCount();
 
     @Modifying
     @Transactional
     @Query("delete from Order o where o.orderId = ?1")
     int deleteByOrderId(Integer orderId);
+
+    @Query(value = "SELECT * FROM `order` \n" +
+            " WHERE `book_id` = :bookId" +
+            " AND `status` = :status "
+            ,nativeQuery = true)
+    public List<Order> getOrderByMore(@Param("bookId") int bookId, @Param("status") int status);
+
 }

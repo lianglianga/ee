@@ -12,7 +12,10 @@
 					</el-option>
 				</el-select> -->
 				<el-form-item>
-					<el-input v-model="filters.search" placeholder="请输入图书名称"></el-input>
+					<el-input v-model="filters.searchBookName" placeholder="请输入图书名称"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.search" placeholder="请输入图书状态"></el-input>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getBookList">查询</el-button>
@@ -136,7 +139,8 @@
 				disabledChange: false,
 				filters: {
 					searchName: '',
-					search:''
+					search:'',
+					searchBookName:''
 				},
 				books: [],
 				booktypes:[],
